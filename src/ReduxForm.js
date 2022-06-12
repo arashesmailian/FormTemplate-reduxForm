@@ -1,9 +1,7 @@
 import React from 'react';
 import Input from './Input';
 import data from './data.json';
-// import datas from "./data.json"
-import {reduxForm, Field, reset} from 'redux-form';
-// import { useState } from 'react';
+import { reduxForm, Field } from 'redux-form';
 import { connect } from 'react-redux';
 import { update as updateForm } from './jsonData';
 
@@ -16,23 +14,18 @@ const renderInput = ({input, meta , label}) => (
 
 const onSubmit = values => {
   alert(JSON.stringify(values));
-  // setFormDatas({...formDatas , value:values})
+  
+
 };
 
 const required = v => {
   if (!v || v === '') {
     return 'This field is required';
   }
-
   return undefined;
 };
 
-let ReduxForm = ({handleSubmit, valid, update, submitting, pristine, reset, handleChange, value}) => {
-  // const [ formDatas, setFormDatas ] = useState(datas);
-  // const handleSubmit = (event) => {
-  //   event.preventDefault();
-  //   console.log('Submitted!');
-  // }
+const ReduxForm = ({handleSubmit, valid, update, submitting, pristine, reset, handleChange}) => {
   return(
     <div>
       <h2>Redux Form</h2>
@@ -48,13 +41,13 @@ let ReduxForm = ({handleSubmit, valid, update, submitting, pristine, reset, hand
                   type="text" 
                   label={d.title}
                   onChange={handleChange}
-                  value={value}
+                  value={d.value}
                 />
               </div>
             ) 
             })
         } 
-          <button disabled={!valid} type="submit" onClick={handleSubmit}>
+          <button disabled={!valid} type="submit">
             Submit
           </button>
         </form>
@@ -90,28 +83,18 @@ const validate = val => {
   return errors;
 };
 
-// ReduxForm = reduxForm({
-//   form: 'ReduxForms',
-//   validate,
-//   onSubmit,
-// })(ReduxForm);
-
-// ReduxForm = connect(
-//   state => ({
-//     initalValues: state.jsonData.value
-//   }),
-//   {update: updateForm}
-// )(ReduxForm);
-
-// export default ReduxForm;
-
 export default connect(state => ({
   initalValues: state.value
 }),
 {update: updateForm})
-(
-  reduxForm({
+( reduxForm({
   form: 'Redux-Form',
   destroyOnUnmount: false,
-  validate
+  validate,
+  onSubmit
 })(ReduxForm))
+
+const mapDispatchToProps = dispatch => ({
+  handleSubmit: value =>
+    dispatch({ type: 'update', payload: value })
+})
