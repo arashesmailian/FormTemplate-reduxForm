@@ -12,6 +12,7 @@ import {Provider} from 'react-redux';
 import {createStore, combineReducers} from 'redux';
 import {reducer as formReducer} from 'redux-form';
 import './App.css';
+import dataReducer from './jsonData';
 
 const Index = () => (
   <div>
@@ -35,7 +36,10 @@ const Index = () => (
   </div>
 );
 
-const reducers = combineReducers({form: formReducer});
+const reducers = combineReducers({
+  form: formReducer,
+  jsonDatas:dataReducer,
+});
 
 const store = createStore(reducers);
 
@@ -70,7 +74,6 @@ class App extends Component {
                 <Route path="/redux-form/" component={ReduxForm} />
                 <Route path="/final-form/" component={FinalForm} />
               </Switch>
-              <Link to="/">Back to Overview</Link>
             </div>
           </Router>
         </div>
