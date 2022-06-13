@@ -14,8 +14,6 @@ const renderInput = ({input, meta , label}) => (
 
 const onSubmit = values => {
   alert(JSON.stringify(values));
-  
-
 };
 
 const required = v => {

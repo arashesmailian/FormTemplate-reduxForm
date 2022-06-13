@@ -1,18 +1,18 @@
 import React, {Component} from 'react';
 import ReduxForm from './ReduxForm';
 import {Provider} from 'react-redux';
-import {createStore, combineReducers} from 'redux';
 import {reducer as formReducer} from 'redux-form';
 import './App.css';
 import dataReducer from './jsonData';
+import { configureStore } from '@reduxjs/toolkit'
 
 
-const reducers = combineReducers({
+const reducer = {
   form: formReducer,
   jsonDatas:dataReducer,
-});
+}
 
-const store = createStore(reducers);
+const store = configureStore({reducer})
 
 class App extends Component {
   render() {
